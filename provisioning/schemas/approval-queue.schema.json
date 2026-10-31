@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_ApprovalQueue",
+  "displayName": "Approval Queue",
+  "description": "Moderation queue for listing submissions awaiting approver review.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ListingId",
+      "displayName": "Listing ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_ListingTitle",
+      "displayName": "Listing Title",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SubmittedBy",
+      "displayName": "Submitted By",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SubmittedOn",
+      "displayName": "Submitted On",
+      "type": "DateTime",
+      "required": true,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    },
+    {
+      "internalName": "EC365_Status",
+      "displayName": "Status",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "Pending",
+      "choices": ["Pending", "Approved", "Rejected"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_ReviewedBy",
+      "displayName": "Reviewed By",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ReviewedOn",
+      "displayName": "Reviewed On",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    },
+    {
+      "internalName": "EC365_Notes",
+      "displayName": "Notes",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 5000, "numberOfLines": 8 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_Status"], "primary": true },
+    { "columns": ["EC365_ListingId"], "primary": true },
+    { "columns": ["EC365_SubmittedBy"], "primary": true },
+    { "columns": ["EC365_SubmittedOn"], "primary": true },
+    { "columns": ["EC365_Status", "EC365_SubmittedOn"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Approval Queue Item",
+      "id": "0x0100EC365000E",
+      "description": "Enterprise Classifieds 365 approval queue item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_ListingId",
+        "EC365_ListingTitle",
+        "EC365_SubmittedBy",
+        "EC365_SubmittedOn",
+        "EC365_Status",
+        "EC365_ReviewedBy",
+        "EC365_ReviewedOn",
+        "EC365_Notes"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Queue Items",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["EC365_ListingTitle", "EC365_SubmittedBy", "EC365_Status", "EC365_SubmittedOn", "EC365_ReviewedBy", "Modified"],
+      "sort": [{ "field": "EC365_SubmittedOn", "ascending": true }]
+    },
+    {
+      "title": "Pending Approval",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Pending</Value></Eq></Where>",
+      "fields": ["EC365_ListingTitle", "EC365_SubmittedBy", "EC365_SubmittedOn", "Created"],
+      "sort": [{ "field": "EC365_SubmittedOn", "ascending": true }]
+    },
+    {
+      "title": "Recently Reviewed",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Or><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Approved</Value></Eq><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Rejected</Value></Eq></Or></Where>",
+      "fields": ["EC365_ListingTitle", "EC365_Status", "EC365_ReviewedBy", "EC365_ReviewedOn", "EC365_Notes"],
+      "sort": [{ "field": "EC365_ReviewedOn", "ascending": false }]
+    }
+  ]
+}

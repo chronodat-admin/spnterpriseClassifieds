@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Categories",
+  "displayName": "Categories",
+  "description": "Hierarchical product and service categories for classifying marketplace listings.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_Description",
+      "displayName": "Description",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 2000, "numberOfLines": 6 }
+    },
+    {
+      "internalName": "EC365_ParentId",
+      "displayName": "Parent Category ID",
+      "type": "Number",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_IconName",
+      "displayName": "Icon Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 100 }
+    },
+    {
+      "internalName": "EC365_Color",
+      "displayName": "Color",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 20, "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" }
+    },
+    {
+      "internalName": "EC365_ImageUrl",
+      "displayName": "Image URL",
+      "type": "URL",
+      "required": false,
+      "indexed": false,
+      "validation": { "format": "Hyperlink" }
+    },
+    {
+      "internalName": "EC365_SortOrder",
+      "displayName": "Sort Order",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_IsVisible",
+      "displayName": "Is Visible",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": true
+    },
+    {
+      "internalName": "EC365_ApprovalRequired",
+      "displayName": "Approval Required",
+      "type": "Boolean",
+      "required": true,
+      "indexed": false,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_ListingCount",
+      "displayName": "Listing Count",
+      "type": "Number",
+      "required": false,
+      "indexed": false,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_ParentId"], "primary": true },
+    { "columns": ["EC365_SortOrder"], "primary": true },
+    { "columns": ["EC365_IsVisible"], "primary": true },
+    { "columns": ["EC365_ParentId", "EC365_SortOrder"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Category",
+      "id": "0x0100EC3650002",
+      "description": "Enterprise Classifieds 365 category item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_Description",
+        "EC365_ParentId",
+        "EC365_IconName",
+        "EC365_Color",
+        "EC365_ImageUrl",
+        "EC365_SortOrder",
+        "EC365_IsVisible",
+        "EC365_ApprovalRequired",
+        "EC365_ListingCount"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Categories",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_ParentId", "EC365_SortOrder", "EC365_IsVisible", "EC365_ApprovalRequired", "EC365_ListingCount", "Modified"],
+      "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+    },
+    {
+      "title": "Visible Categories",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsVisible'/><Value Type='Boolean'>1</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_ParentId", "EC365_IconName", "EC365_Color", "EC365_SortOrder", "EC365_ListingCount"],
+      "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+    },
+    {
+      "title": "Root Categories",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><IsNull><FieldRef Name='EC365_ParentId'/></IsNull></Where>",
+      "fields": ["LinkTitle", "EC365_SortOrder", "EC365_IsVisible", "EC365_ListingCount", "EC365_ImageUrl"],
+      "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "1.1",
+  "description": "SharePoint security groups and role assignments for Enterprise Classifieds 365.",
+  "siteCollectionAdministrators": [],
+  "groups": [
+    {
+      "title": "EC365_Owners",
+      "description": "Full control over Enterprise Classifieds 365 site, lists, libraries, settings, and security.",
+      "allowMembersEditMembership": false,
+      "allowRequestToJoinLeave": false,
+      "autoAcceptRequestToJoinLeave": false,
+      "onlyAllowMembersViewMembership": false,
+      "permissionLevel": "Full Control",
+      "defaultMembers": [],
+      "seedRules": {
+        "includeCurrentUser": true,
+        "includeSiteCollectionAdmins": true
+      },
+      "listPermissions": {
+        "default": "Full Control",
+        "overrides": {}
+      }
+    },
+    {
+      "title": "EC365_Moderators",
+      "description": "Moderate listings, reviews, reports, and announcements. Can edit and delete content across all lists.",
+      "allowMembersEditMembership": false,
+      "allowRequestToJoinLeave": false,
+      "autoAcceptRequestToJoinLeave": false,
+      "onlyAllowMembersViewMembership": true,
+      "permissionLevel": "Edit",
+      "defaultMembers": [],
+      "seedRules": {
+        "includeCurrentUser": true
+      },
+      "listPermissions": {
+        "default": "Edit",
+        "overrides": {
+          "EC365_Settings": "Full Control",
+          "EC365_ActivityLogs": "Read",
+          "EC365_Reports": "Edit",
+          "EC365_Reviews": "Edit",
+          "EC365_ApprovalQueue": "Edit",
+          "EC365_Announcements": "Edit"
+        }
+      }
+    },
+    {
+      "title": "EC365_Approvers",
+      "description": "Review and approve or reject pending listings in the approval queue.",
+      "allowMembersEditMembership": false,
+      "allowRequestToJoinLeave": false,
+      "autoAcceptRequestToJoinLeave": false,
+      "onlyAllowMembersViewMembership": true,
+      "permissionLevel": "Contribute",
+      "defaultMembers": [],
+      "seedRules": {},
+      "listPermissions": {
+        "default": "Read",
+        "overrides": {
+          "EC365_Listings": "Edit",
+          "EC365_ApprovalQueue": "Edit",
+          "EC365_Notifications": "Contribute",
+          "EC365_ActivityLogs": "Contribute"
+        }
+      }
+    },
+    {
+      "title": "EC365_Contributors",
+      "description": "Create and manage own listings, messages, favorites, saved searches, and wanted ads.",
+      "allowMembersEditMembership": false,
+      "allowRequestToJoinLeave": true,
+      "autoAcceptRequestToJoinLeave": false,
+      "onlyAllowMembersViewMembership": true,
+      "permissionLevel": "Contribute",
+      "defaultMembers": [],
+      "seedRules": {
+        "includeAssociatedGroupMembers": "Members"
+      },
+      "listPermissions": {
+        "default": "Read",
+        "overrides": {
+          "EC365_Listings": "Contribute",
+          "EC365_Favorites": "Contribute",
+          "EC365_FavoriteCollections": "Contribute",
+          "EC365_Messages": "Contribute",
+          "EC365_Reviews": "Contribute",
+          "EC365_Reports": "Contribute",
+          "EC365_Notifications": "Contribute",
+          "EC365_SavedSearches": "Contribute",
+          "EC365_WantedAds": "Contribute",
+          "EC365_ListingImages": "Contribute",
+          "EC365_SellerAttachments": "Contribute",
+          "EC365_Categories": "Read",
+          "EC365_Conditions": "Read",
+          "EC365_Locations": "Read",
+          "EC365_Tags": "Read",
+          "EC365_Announcements": "Read",
+          "EC365_Documents": "Read",
+          "EC365_Templates": "Read",
+          "EC365_Settings": "Read"
+        }
+      }
+    },
+    {
+      "title": "EC365_Visitors",
+      "description": "Read-only access to published listings, categories, locations, and help documents.",
+      "allowMembersEditMembership": false,
+      "allowRequestToJoinLeave": true,
+      "autoAcceptRequestToJoinLeave": true,
+      "onlyAllowMembersViewMembership": true,
+      "permissionLevel": "Read",
+      "defaultMembers": [],
+      "seedRules": {
+        "includeEveryoneExceptExternal": true,
+        "includeAssociatedGroupMembers": "Visitors"
+      },
+      "listPermissions": {
+        "default": "Read",
+        "overrides": {
+          "EC365_Settings": "No Access",
+          "EC365_ActivityLogs": "No Access",
+          "EC365_ApprovalQueue": "No Access",
+          "EC365_Reports": "No Access",
+          "EC365_Messages": "No Access",
+          "EC365_Favorites": "No Access",
+          "EC365_FavoriteCollections": "No Access",
+          "EC365_SavedSearches": "No Access",
+          "EC365_Notifications": "No Access"
+        }
+      }
+    }
+  ],
+  "permissionLevels": {
+    "Full Control": {
+      "roleTypeKind": 5,
+      "description": "Full control of the site."
+    },
+    "Edit": {
+      "roleTypeKind": 6,
+      "description": "Add, edit, and delete list items and documents."
+    },
+    "Contribute": {
+      "roleTypeKind": 3,
+      "description": "Add and edit own items."
+    },
+    "Read": {
+      "roleTypeKind": 2,
+      "description": "View pages and list items."
+    },
+    "No Access": {
+      "roleTypeKind": 0,
+      "description": "No permissions on the list or library."
+    }
+  },
+  "breakInheritanceLists": [
+    "EC365_Settings",
+    "EC365_ActivityLogs",
+    "EC365_ApprovalQueue",
+    "EC365_Reports",
+    "EC365_Templates"
+  ],
+  "uniqueRoleAssignments": {
+    "EC365_Settings": ["EC365_Owners", "EC365_Moderators"],
+    "EC365_ActivityLogs": ["EC365_Owners", "EC365_Moderators", "EC365_Approvers"],
+    "EC365_ApprovalQueue": ["EC365_Owners", "EC365_Moderators", "EC365_Approvers"],
+    "EC365_Reports": ["EC365_Owners", "EC365_Moderators"],
+    "EC365_Templates": ["EC365_Owners", "EC365_Moderators"]
+  }
+}

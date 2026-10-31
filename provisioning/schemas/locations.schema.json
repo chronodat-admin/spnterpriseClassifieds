@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Locations",
+  "displayName": "Locations",
+  "description": "Office and campus locations available for listing pickup and delivery.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_Office",
+      "displayName": "Office",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Building",
+      "displayName": "Building",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_City",
+      "displayName": "City",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Country",
+      "displayName": "Country",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SortOrder",
+      "displayName": "Sort Order",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_City"], "primary": true },
+    { "columns": ["EC365_Country"], "primary": true },
+    { "columns": ["EC365_SortOrder"], "primary": true },
+    { "columns": ["EC365_Country", "EC365_City"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Location",
+      "id": "0x0100EC3650004",
+      "description": "Enterprise Classifieds 365 location item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_Office", "EC365_Building", "EC365_City", "EC365_Country", "EC365_SortOrder"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Locations",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_Office", "EC365_Building", "EC365_City", "EC365_Country", "EC365_SortOrder"],
+      "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+    },
+    {
+      "title": "By Country",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["LinkTitle", "EC365_City", "EC365_Office", "EC365_Building", "EC365_Country"],
+      "sort": [
+        { "field": "EC365_Country", "ascending": true },
+        { "field": "EC365_City", "ascending": true }
+      ]
+    }
+  ]
+}

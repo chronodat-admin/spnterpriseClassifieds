@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "1.0",
+  "description": "Document libraries for Enterprise Classifieds 365 media, documents, and templates.",
+  "libraries": [
+    {
+      "listName": "EC365_ListingImages",
+      "displayName": "Listing Images",
+      "description": "Image assets uploaded for marketplace listings including primary and gallery photos.",
+      "template": "DocumentLibrary",
+      "enableVersioning": true,
+      "enableMinorVersions": false,
+      "enableContentTypes": true,
+      "enableThumbnails": true,
+      "columns": [
+        {
+          "internalName": "EC365_ListingId",
+          "displayName": "Listing ID",
+          "type": "Number",
+          "required": true,
+          "indexed": true,
+          "validation": { "minValue": 1, "decimals": 0 }
+        },
+        {
+          "internalName": "EC365_SortOrder",
+          "displayName": "Sort Order",
+          "type": "Number",
+          "required": true,
+          "indexed": true,
+          "defaultValue": 0,
+          "validation": { "minValue": 0, "decimals": 0 }
+        },
+        {
+          "internalName": "EC365_IsPrimary",
+          "displayName": "Is Primary",
+          "type": "Boolean",
+          "required": true,
+          "indexed": true,
+          "defaultValue": false
+        },
+        {
+          "internalName": "EC365_AltText",
+          "displayName": "Alt Text",
+          "type": "Text",
+          "required": false,
+          "indexed": false,
+          "validation": { "maxLength": 500 }
+        },
+        {
+          "internalName": "EC365_UploadedBy",
+          "displayName": "Uploaded By",
+          "type": "Text",
+          "required": false,
+          "indexed": true,
+          "validation": { "maxLength": 255 }
+        }
+      ],
+      "indexedColumns": [
+        { "columns": ["EC365_ListingId"], "primary": true },
+        { "columns": ["EC365_IsPrimary"], "primary": true },
+        { "columns": ["EC365_ListingId", "EC365_SortOrder"], "primary": false }
+      ],
+      "contentTypes": [
+        {
+          "name": "EC365 Listing Image",
+          "id": "0x010105EC3650001",
+          "description": "Image file associated with a marketplace listing.",
+          "group": "Enterprise Classifieds 365",
+          "parentContentType": "Document",
+          "fields": ["EC365_ListingId", "EC365_SortOrder", "EC365_IsPrimary", "EC365_AltText", "EC365_UploadedBy"]
+        }
+      ],
+      "views": [
+        {
+          "title": "All Images",
+          "viewType": "HTML",
+          "rowLimit": 500,
+          "default": true,
+          "fields": ["DocIcon", "LinkFilename", "EC365_ListingId", "EC365_IsPrimary", "EC365_SortOrder", "Modified"],
+          "sort": [{ "field": "EC365_ListingId", "ascending": true }]
+        },
+        {
+          "title": "By Listing",
+          "viewType": "HTML",
+          "rowLimit": 100,
+          "fields": ["LinkFilename", "EC365_SortOrder", "EC365_IsPrimary", "EC365_AltText", "Created"],
+          "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+        }
+      ],
+      "allowedFileTypes": [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"],
+      "maxFileSizeMB": 10
+    },
+    {
+      "listName": "EC365_Documents",
+      "displayName": "Documents",
+      "description": "General policy, help, and administrative documents for the classifieds platform.",
+      "template": "DocumentLibrary",
+      "enableVersioning": true,
+      "enableMinorVersions": true,
+      "enableContentTypes": true,
+      "enableThumbnails": false,
+      "columns": [
+        {
+          "internalName": "EC365_Category",
+          "displayName": "Category",
+          "type": "Choice",
+          "required": true,
+          "indexed": true,
+          "defaultValue": "General",
+          "choices": ["General", "Policy", "Help", "Legal", "Admin", "Marketing"],
+          "validation": { "fillInChoice": false }
+        },
+        {
+          "internalName": "EC365_DocumentType",
+          "displayName": "Document Type",
+          "type": "Choice",
+          "required": false,
+          "indexed": true,
+          "choices": ["Guide", "FAQ", "Terms", "Privacy", "Procedure", "Template", "Other"],
+          "validation": { "fillInChoice": false }
+        },
+        {
+          "internalName": "EC365_IsPublished",
+          "displayName": "Is Published",
+          "type": "Boolean",
+          "required": true,
+          "indexed": true,
+          "defaultValue": false
+        },
+        {
+          "internalName": "EC365_SortOrder",
+          "displayName": "Sort Order",
+          "type": "Number",
+          "required": false,
+          "indexed": true,
+          "defaultValue": 0,
+          "validation": { "minValue": 0, "decimals": 0 }
+        }
+      ],
+      "indexedColumns": [
+        { "columns": ["EC365_Category"], "primary": true },
+        { "columns": ["EC365_IsPublished"], "primary": true }
+      ],
+      "contentTypes": [
+        {
+          "name": "EC365 Document",
+          "id": "0x010105EC3650002",
+          "description": "Administrative or help document for Enterprise Classifieds 365.",
+          "group": "Enterprise Classifieds 365",
+          "parentContentType": "Document",
+          "fields": ["EC365_Category", "EC365_DocumentType", "EC365_IsPublished", "EC365_SortOrder"]
+        }
+      ],
+      "views": [
+        {
+          "title": "All Documents",
+          "viewType": "HTML",
+          "rowLimit": 200,
+          "default": true,
+          "fields": ["DocIcon", "LinkFilename", "EC365_Category", "EC365_DocumentType", "EC365_IsPublished", "Modified"],
+          "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+        },
+        {
+          "title": "Published Documents",
+          "viewType": "HTML",
+          "rowLimit": 100,
+          "query": "<Where><Eq><FieldRef Name='EC365_IsPublished'/><Value Type='Boolean'>1</Value></Eq></Where>",
+          "fields": ["LinkFilename", "EC365_Category", "EC365_DocumentType", "Modified"],
+          "sort": [{ "field": "Modified", "ascending": false }]
+        }
+      ],
+      "allowedFileTypes": [".pdf", ".docx", ".doc", ".xlsx", ".pptx", ".txt", ".md"],
+      "maxFileSizeMB": 25
+    },
+    {
+      "listName": "EC365_SellerAttachments",
+      "displayName": "Seller Attachments",
+      "description": "Supplementary files attached by sellers to listings such as manuals, receipts, or specifications.",
+      "template": "DocumentLibrary",
+      "enableVersioning": true,
+      "enableMinorVersions": false,
+      "enableContentTypes": true,
+      "enableThumbnails": false,
+      "columns": [
+        {
+          "internalName": "EC365_ListingId",
+          "displayName": "Listing ID",
+          "type": "Number",
+          "required": true,
+          "indexed": true,
+          "validation": { "minValue": 1, "decimals": 0 }
+        },
+        {
+          "internalName": "EC365_SellerId",
+          "displayName": "Seller ID",
+          "type": "Text",
+          "required": true,
+          "indexed": true,
+          "validation": { "maxLength": 255 }
+        },
+        {
+          "internalName": "EC365_AttachmentType",
+          "displayName": "Attachment Type",
+          "type": "Choice",
+          "required": false,
+          "indexed": true,
+          "choices": ["Manual", "Receipt", "Specification", "Certificate", "Photo", "Other"],
+          "validation": { "fillInChoice": false }
+        },
+        {
+          "internalName": "EC365_Description",
+          "displayName": "Description",
+          "type": "Text",
+          "required": false,
+          "indexed": false,
+          "validation": { "maxLength": 500 }
+        }
+      ],
+      "indexedColumns": [
+        { "columns": ["EC365_ListingId"], "primary": true },
+        { "columns": ["EC365_SellerId"], "primary": true },
+        { "columns": ["EC365_ListingId", "EC365_SellerId"], "primary": false }
+      ],
+      "contentTypes": [
+        {
+          "name": "EC365 Seller Attachment",
+          "id": "0x010105EC3650003",
+          "description": "Seller-provided attachment for a marketplace listing.",
+          "group": "Enterprise Classifieds 365",
+          "parentContentType": "Document",
+          "fields": ["EC365_ListingId", "EC365_SellerId", "EC365_AttachmentType", "EC365_Description"]
+        }
+      ],
+      "views": [
+        {
+          "title": "All Attachments",
+          "viewType": "HTML",
+          "rowLimit": 500,
+          "default": true,
+          "fields": ["DocIcon", "LinkFilename", "EC365_ListingId", "EC365_SellerId", "EC365_AttachmentType", "Created"],
+          "sort": [{ "field": "Created", "ascending": false }]
+        },
+        {
+          "title": "By Listing",
+          "viewType": "HTML",
+          "rowLimit": 50,
+          "fields": ["LinkFilename", "EC365_AttachmentType", "EC365_Description", "Created"],
+          "sort": [{ "field": "Created", "ascending": true }]
+        }
+      ],
+      "allowedFileTypes": [".pdf", ".jpg", ".jpeg", ".png", ".docx", ".xlsx", ".zip"],
+      "maxFileSizeMB": 15
+    },
+    {
+      "listName": "EC365_Templates",
+      "displayName": "Templates",
+      "description": "Email, notification, and document templates used by Power Automate flows and the application.",
+      "template": "DocumentLibrary",
+      "enableVersioning": true,
+      "enableMinorVersions": true,
+      "enableContentTypes": true,
+      "enableThumbnails": false,
+      "columns": [
+        {
+          "internalName": "EC365_TemplateType",
+          "displayName": "Template Type",
+          "type": "Choice",
+          "required": true,
+          "indexed": true,
+          "choices": ["Email", "Teams", "Notification", "Document", "Approval"],
+          "validation": { "fillInChoice": false }
+        },
+        {
+          "internalName": "EC365_TemplateKey",
+          "displayName": "Template Key",
+          "type": "Text",
+          "required": true,
+          "indexed": true,
+          "validation": { "maxLength": 100, "pattern": "^[A-Za-z][A-Za-z0-9_]*$" }
+        },
+        {
+          "internalName": "EC365_Subject",
+          "displayName": "Subject",
+          "type": "Text",
+          "required": false,
+          "indexed": false,
+          "validation": { "maxLength": 500 }
+        },
+        {
+          "internalName": "EC365_IsActive",
+          "displayName": "Is Active",
+          "type": "Boolean",
+          "required": true,
+          "indexed": true,
+          "defaultValue": true
+        },
+        {
+          "internalName": "EC365_Locale",
+          "displayName": "Locale",
+          "type": "Choice",
+          "required": true,
+          "indexed": true,
+          "defaultValue": "en-US",
+          "choices": ["en-US", "en-GB", "fr-FR", "de-DE", "es-ES", "ja-JP"],
+          "validation": { "fillInChoice": false }
+        }
+      ],
+      "indexedColumns": [
+        { "columns": ["EC365_TemplateType"], "primary": true },
+        { "columns": ["EC365_TemplateKey"], "primary": true },
+        { "columns": ["EC365_IsActive"], "primary": true },
+        { "columns": ["EC365_TemplateKey", "EC365_Locale"], "primary": false }
+      ],
+      "contentTypes": [
+        {
+          "name": "EC365 Template",
+          "id": "0x010105EC3650004",
+          "description": "Reusable template for notifications and communications.",
+          "group": "Enterprise Classifieds 365",
+          "parentContentType": "Document",
+          "fields": ["EC365_TemplateType", "EC365_TemplateKey", "EC365_Subject", "EC365_IsActive", "EC365_Locale"]
+        }
+      ],
+      "views": [
+        {
+          "title": "All Templates",
+          "viewType": "HTML",
+          "rowLimit": 100,
+          "default": true,
+          "fields": ["LinkFilename", "EC365_TemplateType", "EC365_TemplateKey", "EC365_Subject", "EC365_IsActive", "EC365_Locale"],
+          "sort": [{ "field": "EC365_TemplateKey", "ascending": true }]
+        },
+        {
+          "title": "Active Templates",
+          "viewType": "HTML",
+          "rowLimit": 100,
+          "query": "<Where><Eq><FieldRef Name='EC365_IsActive'/><Value Type='Boolean'>1</Value></Eq></Where>",
+          "fields": ["LinkFilename", "EC365_TemplateType", "EC365_TemplateKey", "EC365_Subject", "EC365_Locale"],
+          "sort": [{ "field": "EC365_TemplateType", "ascending": true }]
+        }
+      ],
+      "allowedFileTypes": [".html", ".htm", ".txt", ".json", ".docx"],
+      "maxFileSizeMB": 5
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+.pageLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.titleBlock {
+  flex: 1;
+  min-width: 200px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--colorNeutralForeground1);
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--colorNeutralForeground3);
+}
+
+.commandBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .commandBar {
+    width: 100%;
+  }
+}

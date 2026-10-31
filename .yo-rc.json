@@ -1,0 +1,22 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "whichFolder": "subdir",
+    "solutionName": "enterprise-classifieds-365",
+    "environment": "spo",
+    "packageManager": "npm",
+    "skipFeatureDeployment": true,
+    "componentType": "webpart",
+    "template": "react",
+    "componentName": "EnterpriseClassifieds",
+    "componentDescription": "Enterprise Classifieds 365 - Internal marketplace for Microsoft 365",
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.17.1",
+    "sdksVersions": {},
+    "version": "1.21.1",
+    "libraryName": "enterprise-classifieds-365",
+    "libraryId": "01edb3d7-481b-4569-9530-e0a9922f3a3d",
+    "solutionShortDescription": "enterprise-classifieds-365 description",
+    "isDomainIsolated": false
+  }
+}

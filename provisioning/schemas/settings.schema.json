@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Settings",
+  "displayName": "Settings",
+  "description": "Application configuration key-value settings for Enterprise Classifieds 365.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Key",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1, "pattern": "^[A-Za-z][A-Za-z0-9_]*$" }
+    },
+    {
+      "internalName": "EC365_Value",
+      "displayName": "Value",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 8000, "numberOfLines": 10 }
+    },
+    {
+      "internalName": "EC365_Category",
+      "displayName": "Category",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "General",
+      "choices": ["General", "Branding", "Email", "Approval", "AI", "Storage", "Retention", "Notifications", "Teams", "License"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_Description",
+      "displayName": "Description",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 2000, "numberOfLines": 4 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_Category"], "primary": true }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Setting",
+      "id": "0x0100EC365000C",
+      "description": "Enterprise Classifieds 365 configuration setting item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_Value", "EC365_Category", "EC365_Description"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Settings",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_Value", "EC365_Category", "EC365_Description", "Modified"],
+      "sort": [{ "field": "EC365_Category", "ascending": true }]
+    },
+    {
+      "title": "By Category",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_Category", "LinkTitle", "EC365_Value", "Modified"],
+      "sort": [
+        { "field": "EC365_Category", "ascending": true },
+        { "field": "LinkTitle", "ascending": true }
+      ]
+    }
+  ],
+  "seedData": [
+    { "Title": "ListingExpiryDays", "EC365_Value": "90", "EC365_Category": "General", "EC365_Description": "Default number of days before a listing expires." },
+    { "Title": "MaxImagesPerListing", "EC365_Value": "20", "EC365_Category": "Storage", "EC365_Description": "Maximum images allowed per listing." },
+    { "Title": "ImageMaxSizeMB", "EC365_Value": "10", "EC365_Category": "Storage", "EC365_Description": "Maximum upload size for listing images in megabytes." },
+    { "Title": "RequireApproval", "EC365_Value": "true", "EC365_Category": "Approval", "EC365_Description": "Whether new listings require moderator approval before publishing." },
+    { "Title": "AiEnableGeneration", "EC365_Value": "false", "EC365_Category": "AI", "EC365_Description": "Enable AI-assisted listing content generation." },
+    { "Title": "AiEnableModeration", "EC365_Value": "false", "EC365_Category": "AI", "EC365_Description": "Enable AI content moderation on new listings." },
+    { "Title": "AppTitle", "EC365_Value": "Enterprise Classifieds 365", "EC365_Category": "Branding", "EC365_Description": "Display title shown in the application header." },
+    { "Title": "PrimaryColor", "EC365_Value": "#0078D4", "EC365_Category": "Branding", "EC365_Description": "Primary theme color for the application UI." },
+    { "Title": "EnableTeamsNotifications", "EC365_Value": "true", "EC365_Category": "Teams", "EC365_Description": "Send notifications to Microsoft Teams channels." },
+    { "Title": "EnableEmailNotifications", "EC365_Value": "true", "EC365_Category": "Email", "EC365_Description": "Send email notifications for key marketplace events." },
+    { "Title": "OnboardingComplete", "EC365_Value": "false", "EC365_Category": "General", "EC365_Description": "Whether initial onboarding and provisioning has completed." }
+  ]
+}

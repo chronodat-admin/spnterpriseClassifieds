@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Tags",
+  "displayName": "Tags",
+  "description": "Normalized tag vocabulary with usage counts for listing discovery and filtering.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 100, "minLength": 1, "pattern": "^[a-zA-Z0-9][a-zA-Z0-9\\-_\\s]{0,98}[a-zA-Z0-9]?$" }
+    },
+    {
+      "internalName": "EC365_UsageCount",
+      "displayName": "Usage Count",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_UsageCount"], "primary": true }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Tag",
+      "id": "0x0100EC365000B",
+      "description": "Enterprise Classifieds 365 tag item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_UsageCount"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Tags",
+      "viewType": "HTML",
+      "rowLimit": 1000,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_UsageCount", "Modified"],
+      "sort": [{ "field": "Title", "ascending": true }]
+    },
+    {
+      "title": "Popular Tags",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "fields": ["LinkTitle", "EC365_UsageCount"],
+      "sort": [{ "field": "EC365_UsageCount", "ascending": false }]
+    }
+  ]
+}

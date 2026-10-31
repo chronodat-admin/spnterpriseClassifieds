@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Favorites",
+  "displayName": "Favorites",
+  "description": "User favorites linking users to saved marketplace listings.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": false,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_UserId",
+      "displayName": "User ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ListingId",
+      "displayName": "Listing ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_CollectionId",
+      "displayName": "Collection ID",
+      "type": "Number",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_NotifyOnChange",
+      "displayName": "Notify On Change",
+      "type": "Boolean",
+      "required": true,
+      "indexed": false,
+      "defaultValue": false
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_UserId"], "primary": true },
+    { "columns": ["EC365_ListingId"], "primary": true },
+    { "columns": ["EC365_CollectionId"], "primary": true },
+    { "columns": ["EC365_UserId", "EC365_ListingId"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Favorite",
+      "id": "0x0100EC3650005",
+      "description": "Enterprise Classifieds 365 user favorite item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_UserId", "EC365_ListingId", "EC365_CollectionId", "EC365_NotifyOnChange"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Favorites",
+      "viewType": "HTML",
+      "rowLimit": 5000,
+      "default": true,
+      "fields": ["EC365_UserId", "EC365_ListingId", "EC365_CollectionId", "EC365_NotifyOnChange", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "Notify Enabled",
+      "viewType": "HTML",
+      "rowLimit": 1000,
+      "query": "<Where><Eq><FieldRef Name='EC365_NotifyOnChange'/><Value Type='Boolean'>1</Value></Eq></Where>",
+      "fields": ["EC365_UserId", "EC365_ListingId", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+.adminLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.tabList {
+  border-bottom: 1px solid var(--colorNeutralStroke2);
+}
+
+.tabContent {
+  padding-top: 8px;
+}

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_ActivityLogs",
+  "displayName": "Activity Logs",
+  "description": "Audit trail of user and system actions across the classifieds platform.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": false,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_UserId",
+      "displayName": "User ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_UserDisplayName",
+      "displayName": "User Display Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Action",
+      "displayName": "Action",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 100 }
+    },
+    {
+      "internalName": "EC365_EntityType",
+      "displayName": "Entity Type",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "choices": ["Listing", "Category", "Message", "Review", "Report", "Favorite", "Notification", "Setting", "User", "System"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_EntityId",
+      "displayName": "Entity ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 0, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_Details",
+      "displayName": "Details",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 8000, "numberOfLines": 10 }
+    },
+    {
+      "internalName": "EC365_IpAddress",
+      "displayName": "IP Address",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 45 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_UserId"], "primary": true },
+    { "columns": ["EC365_Action"], "primary": true },
+    { "columns": ["EC365_EntityType"], "primary": true },
+    { "columns": ["EC365_EntityId"], "primary": true },
+    { "columns": ["EC365_EntityType", "EC365_EntityId"], "primary": false },
+    { "columns": ["EC365_UserId", "Created"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Activity Log",
+      "id": "0x0100EC365000D",
+      "description": "Enterprise Classifieds 365 activity log item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_UserId",
+        "EC365_UserDisplayName",
+        "EC365_Action",
+        "EC365_EntityType",
+        "EC365_EntityId",
+        "EC365_Details",
+        "EC365_IpAddress"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Activity",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["EC365_UserDisplayName", "EC365_Action", "EC365_EntityType", "EC365_EntityId", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "By Entity",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_EntityType", "EC365_EntityId", "EC365_Action", "EC365_UserDisplayName", "Created"],
+      "sort": [
+        { "field": "EC365_EntityType", "ascending": true },
+        { "field": "Created", "ascending": false }
+      ]
+    },
+    {
+      "title": "By User",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_UserId", "EC365_UserDisplayName", "EC365_Action", "EC365_EntityType", "Created"],
+      "sort": [
+        { "field": "EC365_UserId", "ascending": true },
+        { "field": "Created", "ascending": false }
+      ]
+    }
+  ]
+}

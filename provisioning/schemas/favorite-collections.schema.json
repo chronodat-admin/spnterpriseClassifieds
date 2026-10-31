@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_FavoriteCollections",
+  "displayName": "Favorite Collections",
+  "description": "User-defined collections for organizing saved favorite listings.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_UserId",
+      "displayName": "User ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Description",
+      "displayName": "Description",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 2000, "numberOfLines": 4 }
+    },
+    {
+      "internalName": "EC365_IsDefault",
+      "displayName": "Is Default",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_UserId"], "primary": true },
+    { "columns": ["EC365_IsDefault"], "primary": true },
+    { "columns": ["EC365_UserId", "EC365_IsDefault"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Favorite Collection",
+      "id": "0x0100EC3650011",
+      "description": "Enterprise Classifieds 365 favorite collection item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_UserId", "EC365_Description", "EC365_IsDefault"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Collections",
+      "viewType": "HTML",
+      "rowLimit": 1000,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_UserId", "EC365_IsDefault", "EC365_Description", "Modified"],
+      "sort": [{ "field": "Title", "ascending": true }]
+    },
+    {
+      "title": "By User",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_UserId", "LinkTitle", "EC365_IsDefault", "Modified"],
+      "sort": [
+        { "field": "EC365_UserId", "ascending": true },
+        { "field": "EC365_IsDefault", "ascending": false }
+      ]
+    }
+  ]
+}

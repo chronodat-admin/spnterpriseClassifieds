@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Conditions",
+  "displayName": "Conditions",
+  "description": "Lookup list of item condition values used on marketplace listings.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 100, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_Description",
+      "displayName": "Description",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 1000, "numberOfLines": 4 }
+    },
+    {
+      "internalName": "EC365_SortOrder",
+      "displayName": "Sort Order",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_SortOrder"], "primary": true }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Condition",
+      "id": "0x0100EC3650003",
+      "description": "Enterprise Classifieds 365 condition lookup item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_Description", "EC365_SortOrder"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Conditions",
+      "viewType": "HTML",
+      "rowLimit": 50,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_Description", "EC365_SortOrder", "Modified"],
+      "sort": [{ "field": "EC365_SortOrder", "ascending": true }]
+    }
+  ],
+  "seedData": [
+    { "Title": "New", "EC365_Description": "Brand new, unused item in original packaging.", "EC365_SortOrder": 1 },
+    { "Title": "LikeNew", "EC365_Description": "Minimal use, appears new with no visible wear.", "EC365_SortOrder": 2 },
+    { "Title": "Good", "EC365_Description": "Normal wear, fully functional.", "EC365_SortOrder": 3 },
+    { "Title": "Fair", "EC365_Description": "Noticeable wear but still usable.", "EC365_SortOrder": 4 },
+    { "Title": "Poor", "EC365_Description": "Heavy wear or cosmetic damage; may need repair.", "EC365_SortOrder": 5 }
+  ]
+}

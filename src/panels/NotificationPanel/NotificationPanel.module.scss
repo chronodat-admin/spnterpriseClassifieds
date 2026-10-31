@@ -1,0 +1,65 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px 12px;
+}
+
+.empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--colorNeutralForeground3);
+}
+
+.loading {
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--colorNeutralStroke2);
+  cursor: pointer;
+  text-align: left;
+  background: transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  width: 100%;
+
+  &:hover {
+    background: var(--colorNeutralBackground1Hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--colorStrokeFocus2);
+    outline-offset: -2px;
+  }
+}
+
+.unread {
+  background: var(--colorNeutralBackground1Selected);
+}
+
+.meta {
+  color: var(--colorNeutralForeground4);
+}
+
+.typeBadge {
+  align-self: flex-start;
+}

@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Messages",
+  "displayName": "Messages",
+  "description": "Buyer-seller messaging threads associated with marketplace listings.",
+  "template": "GenericList",
+  "enableAttachments": true,
+  "enableVersioning": false,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ConversationId",
+      "displayName": "Conversation ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SenderId",
+      "displayName": "Sender ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SenderDisplayName",
+      "displayName": "Sender Display Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_RecipientId",
+      "displayName": "Recipient ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_RecipientDisplayName",
+      "displayName": "Recipient Display Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ListingId",
+      "displayName": "Listing ID",
+      "type": "Number",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_ListingTitle",
+      "displayName": "Listing Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Body",
+      "displayName": "Body",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 10000, "numberOfLines": 12, "allowHyperlink": false }
+    },
+    {
+      "internalName": "EC365_IsRead",
+      "displayName": "Is Read",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_AttachmentUrl",
+      "displayName": "Attachment URL",
+      "type": "URL",
+      "required": false,
+      "indexed": false,
+      "validation": { "format": "Hyperlink" }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_ConversationId"], "primary": true },
+    { "columns": ["EC365_SenderId"], "primary": true },
+    { "columns": ["EC365_RecipientId"], "primary": true },
+    { "columns": ["EC365_ListingId"], "primary": true },
+    { "columns": ["EC365_IsRead"], "primary": true },
+    { "columns": ["EC365_RecipientId", "EC365_IsRead"], "primary": false },
+    { "columns": ["EC365_ConversationId", "Created"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Message",
+      "id": "0x0100EC3650006",
+      "description": "Enterprise Classifieds 365 message item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_ConversationId",
+        "EC365_SenderId",
+        "EC365_SenderDisplayName",
+        "EC365_RecipientId",
+        "EC365_RecipientDisplayName",
+        "EC365_ListingId",
+        "EC365_ListingTitle",
+        "EC365_Body",
+        "EC365_IsRead",
+        "EC365_AttachmentUrl"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Messages",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["EC365_ConversationId", "EC365_SenderDisplayName", "EC365_RecipientDisplayName", "EC365_ListingTitle", "EC365_IsRead", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "Unread Messages",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsRead'/><Value Type='Boolean'>0</Value></Eq></Where>",
+      "fields": ["EC365_RecipientId", "EC365_SenderDisplayName", "EC365_ListingTitle", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "By Conversation",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_ConversationId", "EC365_SenderDisplayName", "EC365_Body", "Created"],
+      "sort": [
+        { "field": "EC365_ConversationId", "ascending": true },
+        { "field": "Created", "ascending": true }
+      ]
+    }
+  ]
+}

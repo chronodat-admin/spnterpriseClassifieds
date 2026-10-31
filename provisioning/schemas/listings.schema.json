@@ -1,0 +1,457 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Listings",
+  "displayName": "Listings",
+  "description": "Primary marketplace listings for Enterprise Classifieds 365 including sell, buy, rent, exchange, donate, and wanted items.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 3 }
+    },
+    {
+      "internalName": "EC365_Description",
+      "displayName": "Description",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 10000, "allowHyperlink": true, "numberOfLines": 12 }
+    },
+    {
+      "internalName": "EC365_CategoryId",
+      "displayName": "Category ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_CategoryName",
+      "displayName": "Category Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SellerId",
+      "displayName": "Seller ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SellerDisplayName",
+      "displayName": "Seller Display Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SellerEmail",
+      "displayName": "Seller Email",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255, "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" }
+    },
+    {
+      "internalName": "EC365_Department",
+      "displayName": "Department",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Office",
+      "displayName": "Office",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Status",
+      "displayName": "Status",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "Draft",
+      "choices": ["Draft", "Pending", "Approved", "Rejected", "Expired", "Archived", "Reserved", "Sold"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_ListingType",
+      "displayName": "Listing Type",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "Sell",
+      "choices": ["Sell", "Buy", "Rent", "Exchange", "Donate", "Wanted"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_Condition",
+      "displayName": "Condition",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "Good",
+      "choices": ["New", "LikeNew", "Good", "Fair", "Poor"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_Price",
+      "displayName": "Price",
+      "type": "Currency",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "currencyLocaleId": 1033 }
+    },
+    {
+      "internalName": "EC365_Currency",
+      "displayName": "Currency",
+      "type": "Choice",
+      "required": true,
+      "indexed": false,
+      "defaultValue": "USD",
+      "choices": ["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CHF", "INR"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_IsNegotiable",
+      "displayName": "Is Negotiable",
+      "type": "Boolean",
+      "required": true,
+      "indexed": false,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_IsFeatured",
+      "displayName": "Is Featured",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_IsRental",
+      "displayName": "Is Rental",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_IsAuction",
+      "displayName": "Is Auction",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_IsDonation",
+      "displayName": "Is Donation",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_LocationId",
+      "displayName": "Location ID",
+      "type": "Number",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_LocationName",
+      "displayName": "Location Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Building",
+      "displayName": "Building",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_City",
+      "displayName": "City",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Country",
+      "displayName": "Country",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_PickupAvailable",
+      "displayName": "Pickup Available",
+      "type": "Boolean",
+      "required": true,
+      "indexed": false,
+      "defaultValue": true
+    },
+    {
+      "internalName": "EC365_ShippingAvailable",
+      "displayName": "Shipping Available",
+      "type": "Boolean",
+      "required": true,
+      "indexed": false,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_ImageUrls",
+      "displayName": "Image URLs",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 8000, "allowHyperlink": false, "numberOfLines": 6 }
+    },
+    {
+      "internalName": "EC365_ThumbnailUrl",
+      "displayName": "Thumbnail URL",
+      "type": "URL",
+      "required": false,
+      "indexed": false,
+      "validation": { "format": "Hyperlink" }
+    },
+    {
+      "internalName": "EC365_Tags",
+      "displayName": "Tags",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 2000, "numberOfLines": 3 }
+    },
+    {
+      "internalName": "EC365_Keywords",
+      "displayName": "Keywords",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 1000 }
+    },
+    {
+      "internalName": "EC365_ViewCount",
+      "displayName": "View Count",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_FavoriteCount",
+      "displayName": "Favorite Count",
+      "type": "Number",
+      "required": true,
+      "indexed": false,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_MessageCount",
+      "displayName": "Message Count",
+      "type": "Number",
+      "required": true,
+      "indexed": false,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_ExpiresOn",
+      "displayName": "Expires On",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateOnly", "friendlyFormat": "Disabled" }
+    },
+    {
+      "internalName": "EC365_PublishedOn",
+      "displayName": "Published On",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    },
+    {
+      "internalName": "EC365_ReservedBy",
+      "displayName": "Reserved By",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SoldOn",
+      "displayName": "Sold On",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    },
+    {
+      "internalName": "EC365_ApprovalNotes",
+      "displayName": "Approval Notes",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 2000, "numberOfLines": 6 }
+    },
+    {
+      "internalName": "EC365_AiGenerated",
+      "displayName": "AI Generated",
+      "type": "Boolean",
+      "required": true,
+      "indexed": false,
+      "defaultValue": false
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_Status"], "primary": true },
+    { "columns": ["EC365_CategoryId"], "primary": true },
+    { "columns": ["EC365_SellerId"], "primary": true },
+    { "columns": ["EC365_ListingType"], "primary": true },
+    { "columns": ["EC365_Price"], "primary": true },
+    { "columns": ["EC365_IsFeatured"], "primary": true },
+    { "columns": ["EC365_ExpiresOn"], "primary": true },
+    { "columns": ["EC365_PublishedOn"], "primary": true },
+    { "columns": ["EC365_Status", "EC365_CategoryId"], "primary": false },
+    { "columns": ["EC365_Status", "EC365_PublishedOn"], "primary": false },
+    { "columns": ["EC365_SellerId", "EC365_Status"], "primary": false },
+    { "columns": ["EC365_Status", "EC365_IsFeatured"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Listing",
+      "id": "0x0100EC3650001",
+      "description": "Enterprise Classifieds 365 marketplace listing item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_Description",
+        "EC365_CategoryId",
+        "EC365_CategoryName",
+        "EC365_SellerId",
+        "EC365_SellerDisplayName",
+        "EC365_SellerEmail",
+        "EC365_Department",
+        "EC365_Office",
+        "EC365_Status",
+        "EC365_ListingType",
+        "EC365_Condition",
+        "EC365_Price",
+        "EC365_Currency",
+        "EC365_IsNegotiable",
+        "EC365_IsFeatured",
+        "EC365_IsRental",
+        "EC365_IsAuction",
+        "EC365_IsDonation",
+        "EC365_LocationId",
+        "EC365_LocationName",
+        "EC365_Building",
+        "EC365_City",
+        "EC365_Country",
+        "EC365_PickupAvailable",
+        "EC365_ShippingAvailable",
+        "EC365_ImageUrls",
+        "EC365_ThumbnailUrl",
+        "EC365_Tags",
+        "EC365_Keywords",
+        "EC365_ViewCount",
+        "EC365_FavoriteCount",
+        "EC365_MessageCount",
+        "EC365_ExpiresOn",
+        "EC365_PublishedOn",
+        "EC365_ReservedBy",
+        "EC365_SoldOn",
+        "EC365_ApprovalNotes",
+        "EC365_AiGenerated"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Items",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_Status", "EC365_CategoryName", "EC365_Price", "EC365_Currency", "EC365_SellerDisplayName", "EC365_PublishedOn", "Modified"],
+      "sort": [{ "field": "Modified", "ascending": false }]
+    },
+    {
+      "title": "Active Listings",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Approved</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_CategoryName", "EC365_Price", "EC365_Currency", "EC365_Condition", "EC365_IsFeatured", "EC365_PublishedOn", "EC365_ViewCount"],
+      "sort": [{ "field": "EC365_PublishedOn", "ascending": false }]
+    },
+    {
+      "title": "Pending Approval",
+      "viewType": "HTML",
+      "rowLimit": 50,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Pending</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_CategoryName", "EC365_SellerDisplayName", "EC365_Price", "EC365_Currency", "Created", "EC365_AiGenerated"],
+      "sort": [{ "field": "Created", "ascending": true }]
+    },
+    {
+      "title": "Featured Listings",
+      "viewType": "HTML",
+      "rowLimit": 50,
+      "query": "<Where><And><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Approved</Value></Eq><Eq><FieldRef Name='EC365_IsFeatured'/><Value Type='Boolean'>1</Value></Eq></And></Where>",
+      "fields": ["LinkTitle", "EC365_CategoryName", "EC365_Price", "EC365_ViewCount", "EC365_FavoriteCount", "EC365_PublishedOn"],
+      "sort": [{ "field": "EC365_ViewCount", "ascending": false }]
+    },
+    {
+      "title": "Expiring Soon",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><And><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Approved</Value></Eq><IsNotNull><FieldRef Name='EC365_ExpiresOn'/></IsNotNull></And></Where>",
+      "fields": ["LinkTitle", "EC365_SellerDisplayName", "EC365_ExpiresOn", "EC365_CategoryName", "EC365_Price"],
+      "sort": [{ "field": "EC365_ExpiresOn", "ascending": true }]
+    },
+    {
+      "title": "Sold Listings",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Sold</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_SellerDisplayName", "EC365_SoldOn", "EC365_Price", "EC365_Currency", "EC365_CategoryName"],
+      "sort": [{ "field": "EC365_SoldOn", "ascending": false }]
+    },
+    {
+      "title": "Draft Listings",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Draft</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_SellerDisplayName", "EC365_CategoryName", "Created", "Modified"],
+      "sort": [{ "field": "Modified", "ascending": false }]
+    }
+  ]
+}

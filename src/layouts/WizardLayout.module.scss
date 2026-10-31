@@ -1,0 +1,22 @@
+.wizardLayout {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.stepper {
+  margin-bottom: 8px;
+}
+
+.body {
+  background: var(--colorNeutralBackground1);
+  border: 1px solid var(--colorNeutralStroke2);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+}

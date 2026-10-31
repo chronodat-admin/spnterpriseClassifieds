@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Reports",
+  "displayName": "Reports",
+  "description": "User-submitted reports for inappropriate, fraudulent, or policy-violating listings.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ListingId",
+      "displayName": "Listing ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_ReporterId",
+      "displayName": "Reporter ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ReportType",
+      "displayName": "Report Type",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "Other",
+      "choices": ["Spam", "Duplicate", "Fraud", "Inappropriate", "Other"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_Reason",
+      "displayName": "Reason",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 5000, "numberOfLines": 8 }
+    },
+    {
+      "internalName": "EC365_Status",
+      "displayName": "Status",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "Pending",
+      "choices": ["Pending", "Reviewed", "Dismissed", "ActionTaken"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_AdminNotes",
+      "displayName": "Admin Notes",
+      "type": "Note",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 5000, "numberOfLines": 8 }
+    },
+    {
+      "internalName": "EC365_ReviewedBy",
+      "displayName": "Reviewed By",
+      "type": "Text",
+      "required": false,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_Status"], "primary": true },
+    { "columns": ["EC365_ListingId"], "primary": true },
+    { "columns": ["EC365_ReportType"], "primary": true },
+    { "columns": ["EC365_ReporterId"], "primary": true },
+    { "columns": ["EC365_Status", "EC365_ReportType"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Report",
+      "id": "0x0100EC3650008",
+      "description": "Enterprise Classifieds 365 listing report item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_ListingId",
+        "EC365_ReporterId",
+        "EC365_ReportType",
+        "EC365_Reason",
+        "EC365_Status",
+        "EC365_AdminNotes",
+        "EC365_ReviewedBy"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Reports",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["EC365_ListingId", "EC365_ReportType", "EC365_Status", "EC365_ReporterId", "Created", "Modified"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "Pending Reports",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>Pending</Value></Eq></Where>",
+      "fields": ["EC365_ListingId", "EC365_ReportType", "EC365_Reason", "EC365_ReporterId", "Created"],
+      "sort": [{ "field": "Created", "ascending": true }]
+    },
+    {
+      "title": "Action Taken",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><Eq><FieldRef Name='EC365_Status'/><Value Type='Choice'>ActionTaken</Value></Eq></Where>",
+      "fields": ["EC365_ListingId", "EC365_ReportType", "EC365_ReviewedBy", "Modified"],
+      "sort": [{ "field": "Modified", "ascending": false }]
+    }
+  ]
+}

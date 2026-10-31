@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Announcements",
+  "displayName": "Announcements",
+  "description": "Site-wide announcements and banners displayed in the classifieds application.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_Body",
+      "displayName": "Body",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 5000, "numberOfLines": 8, "allowHyperlink": true }
+    },
+    {
+      "internalName": "EC365_IsActive",
+      "displayName": "Is Active",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": true
+    },
+    {
+      "internalName": "EC365_StartDate",
+      "displayName": "Start Date",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    },
+    {
+      "internalName": "EC365_EndDate",
+      "displayName": "End Date",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    },
+    {
+      "internalName": "EC365_Priority",
+      "displayName": "Priority",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "maxValue": 100, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_IsActive"], "primary": true },
+    { "columns": ["EC365_StartDate"], "primary": true },
+    { "columns": ["EC365_EndDate"], "primary": true },
+    { "columns": ["EC365_Priority"], "primary": true },
+    { "columns": ["EC365_IsActive", "EC365_Priority"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Announcement",
+      "id": "0x0100EC365000F",
+      "description": "Enterprise Classifieds 365 announcement item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_Body", "EC365_IsActive", "EC365_StartDate", "EC365_EndDate", "EC365_Priority"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Announcements",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_IsActive", "EC365_Priority", "EC365_StartDate", "EC365_EndDate", "Modified"],
+      "sort": [{ "field": "EC365_Priority", "ascending": false }]
+    },
+    {
+      "title": "Active Announcements",
+      "viewType": "HTML",
+      "rowLimit": 50,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsActive'/><Value Type='Boolean'>1</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_Body", "EC365_Priority", "EC365_StartDate", "EC365_EndDate"],
+      "sort": [{ "field": "EC365_Priority", "ascending": false }]
+    }
+  ]
+}

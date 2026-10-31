@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Notifications",
+  "displayName": "Notifications",
+  "description": "In-app notifications for users including messages, approvals, expirations, and system alerts.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": false,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_UserId",
+      "displayName": "User ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Message",
+      "displayName": "Message",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 2000, "numberOfLines": 6 }
+    },
+    {
+      "internalName": "EC365_Type",
+      "displayName": "Type",
+      "type": "Choice",
+      "required": true,
+      "indexed": true,
+      "defaultValue": "System",
+      "choices": ["Message", "Approval", "Expiration", "Match", "Review", "System", "Sold", "Reserved"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_LinkUrl",
+      "displayName": "Link URL",
+      "type": "URL",
+      "required": false,
+      "indexed": false,
+      "validation": { "format": "Hyperlink" }
+    },
+    {
+      "internalName": "EC365_IsRead",
+      "displayName": "Is Read",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_RelatedListingId",
+      "displayName": "Related Listing ID",
+      "type": "Number",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_UserId"], "primary": true },
+    { "columns": ["EC365_Type"], "primary": true },
+    { "columns": ["EC365_IsRead"], "primary": true },
+    { "columns": ["EC365_UserId", "EC365_IsRead"], "primary": false },
+    { "columns": ["EC365_UserId", "Created"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Notification",
+      "id": "0x0100EC3650009",
+      "description": "Enterprise Classifieds 365 notification item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_UserId",
+        "EC365_Message",
+        "EC365_Type",
+        "EC365_LinkUrl",
+        "EC365_IsRead",
+        "EC365_RelatedListingId"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Notifications",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_UserId", "EC365_Type", "EC365_IsRead", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "Unread Notifications",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsRead'/><Value Type='Boolean'>0</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_UserId", "EC365_Type", "EC365_Message", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "By Type",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_Type", "LinkTitle", "EC365_UserId", "EC365_IsRead", "Created"],
+      "sort": [
+        { "field": "EC365_Type", "ascending": true },
+        { "field": "Created", "ascending": false }
+      ]
+    }
+  ]
+}

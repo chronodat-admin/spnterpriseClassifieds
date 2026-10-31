@@ -1,0 +1,148 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--colorNeutralBackground1);
+  border-right: 1px solid var(--colorNeutralStroke2);
+  overflow: hidden;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--colorNeutralStroke2);
+  min-height: 48px;
+}
+
+.brandIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.brandText {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navList {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 4px;
+  list-style: none;
+  margin: 0;
+}
+
+.sectionHeader {
+  padding: 8px 12px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--colorNeutralForeground3);
+}
+
+.navItem {
+  margin-bottom: 2px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--colorNeutralForeground2);
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--colorNeutralBackground1Hover);
+    color: var(--colorNeutralForeground1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--colorStrokeFocus2);
+    outline-offset: -2px;
+  }
+}
+
+.navLinkActive {
+  background-color: var(--colorNeutralBackground1Selected);
+  color: var(--colorNeutralForeground1);
+  font-weight: 600;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background: var(--colorBrandBackground);
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+.navLinkWrapper {
+  position: relative;
+}
+
+.navIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  flex-shrink: 0;
+}
+
+.collapsed .navLabel,
+.collapsed .badge,
+.collapsed .brandText {
+  display: none;
+}
+
+.collapsed .navLink {
+  justify-content: center;
+  padding: 8px;
+}
+
+.collapsed .brand {
+  justify-content: center;
+  padding: 16px 8px;
+}
+
+.footer {
+  padding: 8px 4px;
+  border-top: 1px solid var(--colorNeutralStroke2);
+}
+
+.divider {
+  height: 1px;
+  background: var(--colorNeutralStroke2);
+  margin: 8px 12px;
+}

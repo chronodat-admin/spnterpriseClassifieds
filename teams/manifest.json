@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.23",
+  "id": "01edb3d7-481b-4569-9530-e0a9922f3a3d",
+  "developer": {
+    "name": "Chronodat LLC",
+    "websiteUrl": "https://www.chronodat.com/enterprise-classifieds-365",
+    "privacyUrl": "https://www.chronodat.com/Privacy",
+    "termsOfUseUrl": "https://www.chronodat.com/terms-conditions"
+  },
+  "name": {
+    "short": "Enterprise Classifieds 365",
+    "full": "Enterprise Classifieds 365"
+  },
+  "description": {
+    "short": "Internal marketplace for SharePoint and Teams",
+    "full": "Enterprise Classifieds 365 lets employees post, find, and message about listings inside Microsoft Teams and SharePoint Online. Listing data stays in the customer tenant."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#0f6cbd",
+  "staticTabs": [
+    {
+      "entityId": "enterpriseClassifieds365",
+      "name": "Enterprise Classifieds 365",
+      "contentUrl": "https://{teamSiteDomain}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest=/_layouts/15/teamshostedapp.aspx%3Fteams%26personal%26componentId=11ba5f14-f00a-4922-94bc-94155bf58a16%26forceLocale={locale}",
+      "scopes": ["personal"]
+    }
+  ],
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://{teamSiteDomain}{teamSitePath}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest={teamSitePath}/_layouts/15/teamshostedapp.aspx%3FopenPropertyPane=true%26teams%26componentId=11ba5f14-f00a-4922-94bc-94155bf58a16%26forceLocale={locale}",
+      "canUpdateConfiguration": true,
+      "scopes": ["team"],
+      "context": ["channelTab"]
+    }
+  ],
+  "permissions": ["identity"],
+  "validDomains": ["*.sharepoint.com", "*.sharepoint.us"],
+  "webApplicationInfo": {
+    "id": "00000003-0000-0ff1-ce00-000000000000",
+    "resource": "https://{teamSiteDomain}"
+  }
+}

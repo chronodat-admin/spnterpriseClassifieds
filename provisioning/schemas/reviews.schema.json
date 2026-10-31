@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_Reviews",
+  "displayName": "Reviews",
+  "description": "Buyer and seller reviews and ratings for completed marketplace transactions.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ListingId",
+      "displayName": "Listing ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_ReviewerId",
+      "displayName": "Reviewer ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_ReviewerDisplayName",
+      "displayName": "Reviewer Display Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_SellerId",
+      "displayName": "Seller ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Rating",
+      "displayName": "Rating",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "maxValue": 5, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_Comment",
+      "displayName": "Comment",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 5000, "numberOfLines": 8 }
+    },
+    {
+      "internalName": "EC365_IsModerated",
+      "displayName": "Is Moderated",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_IsReported",
+      "displayName": "Is Reported",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_ListingId"], "primary": true },
+    { "columns": ["EC365_SellerId"], "primary": true },
+    { "columns": ["EC365_ReviewerId"], "primary": true },
+    { "columns": ["EC365_IsModerated"], "primary": true },
+    { "columns": ["EC365_IsReported"], "primary": true },
+    { "columns": ["EC365_SellerId", "EC365_Rating"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Review",
+      "id": "0x0100EC3650007",
+      "description": "Enterprise Classifieds 365 review item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_ListingId",
+        "EC365_ReviewerId",
+        "EC365_ReviewerDisplayName",
+        "EC365_SellerId",
+        "EC365_Rating",
+        "EC365_Comment",
+        "EC365_IsModerated",
+        "EC365_IsReported"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Reviews",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["EC365_ListingId", "EC365_ReviewerDisplayName", "EC365_Rating", "EC365_IsModerated", "EC365_IsReported", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "Pending Moderation",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsModerated'/><Value Type='Boolean'>0</Value></Eq></Where>",
+      "fields": ["EC365_ListingId", "EC365_ReviewerDisplayName", "EC365_Rating", "EC365_Comment", "Created"],
+      "sort": [{ "field": "Created", "ascending": true }]
+    },
+    {
+      "title": "Reported Reviews",
+      "viewType": "HTML",
+      "rowLimit": 100,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsReported'/><Value Type='Boolean'>1</Value></Eq></Where>",
+      "fields": ["EC365_ListingId", "EC365_ReviewerDisplayName", "EC365_Rating", "EC365_Comment", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "By Seller",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_SellerId", "EC365_Rating", "EC365_Comment", "Created"],
+      "sort": [
+        { "field": "EC365_SellerId", "ascending": true },
+        { "field": "Created", "ascending": false }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_SavedSearches",
+  "displayName": "Saved Searches",
+  "description": "User-defined saved search queries with optional match notifications.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 1 }
+    },
+    {
+      "internalName": "EC365_UserId",
+      "displayName": "User ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_Query",
+      "displayName": "Query",
+      "type": "Text",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 1000 }
+    },
+    {
+      "internalName": "EC365_FiltersJson",
+      "displayName": "Filters JSON",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "defaultValue": "{}",
+      "validation": { "maxLength": 8000, "numberOfLines": 10 }
+    },
+    {
+      "internalName": "EC365_NotifyOnMatch",
+      "displayName": "Notify On Match",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": false
+    },
+    {
+      "internalName": "EC365_LastRun",
+      "displayName": "Last Run",
+      "type": "DateTime",
+      "required": false,
+      "indexed": true,
+      "validation": { "displayFormat": "DateTime", "friendlyFormat": "Relative" }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_UserId"], "primary": true },
+    { "columns": ["EC365_NotifyOnMatch"], "primary": true },
+    { "columns": ["EC365_LastRun"], "primary": true },
+    { "columns": ["EC365_UserId", "EC365_NotifyOnMatch"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Saved Search",
+      "id": "0x0100EC365000A",
+      "description": "Enterprise Classifieds 365 saved search item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": ["Title", "EC365_UserId", "EC365_Query", "EC365_FiltersJson", "EC365_NotifyOnMatch", "EC365_LastRun"]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Saved Searches",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_UserId", "EC365_Query", "EC365_NotifyOnMatch", "EC365_LastRun", "Modified"],
+      "sort": [{ "field": "Modified", "ascending": false }]
+    },
+    {
+      "title": "Notify Enabled",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><Eq><FieldRef Name='EC365_NotifyOnMatch'/><Value Type='Boolean'>1</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_UserId", "EC365_Query", "EC365_LastRun"],
+      "sort": [{ "field": "EC365_LastRun", "ascending": true }]
+    }
+  ]
+}

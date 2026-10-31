@@ -1,0 +1,6 @@
+{
+  "includeExtensions": ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp", "resx"],
+  "includeFiles": [
+    "src/assets/**/*"
+  ]
+}

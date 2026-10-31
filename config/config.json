@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "enterprise-classifieds-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/enterpriseClassifieds/EnterpriseClassifiedsWebPart.js",
+          "manifest": "./src/webparts/enterpriseClassifieds/EnterpriseClassifiedsWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "EnterpriseClassifiedsWebPartStrings": "lib/webparts/enterpriseClassifieds/loc/{locale}.js"
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0",
+  "listName": "EC365_WantedAds",
+  "displayName": "Wanted Ads",
+  "description": "Buyer wanted postings describing items users are looking to purchase.",
+  "template": "GenericList",
+  "enableAttachments": false,
+  "enableVersioning": true,
+  "enableContentTypes": true,
+  "columns": [
+    {
+      "internalName": "Title",
+      "displayName": "Title",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255, "minLength": 3 }
+    },
+    {
+      "internalName": "EC365_Description",
+      "displayName": "Description",
+      "type": "Note",
+      "required": true,
+      "indexed": false,
+      "validation": { "maxLength": 5000, "numberOfLines": 10 }
+    },
+    {
+      "internalName": "EC365_CategoryId",
+      "displayName": "Category ID",
+      "type": "Number",
+      "required": true,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_UserId",
+      "displayName": "User ID",
+      "type": "Text",
+      "required": true,
+      "indexed": true,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_UserDisplayName",
+      "displayName": "User Display Name",
+      "type": "Text",
+      "required": false,
+      "indexed": false,
+      "validation": { "maxLength": 255 }
+    },
+    {
+      "internalName": "EC365_MaxPrice",
+      "displayName": "Max Price",
+      "type": "Currency",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 0, "currencyLocaleId": 1033 }
+    },
+    {
+      "internalName": "EC365_Currency",
+      "displayName": "Currency",
+      "type": "Choice",
+      "required": false,
+      "indexed": false,
+      "defaultValue": "USD",
+      "choices": ["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CHF", "INR"],
+      "validation": { "fillInChoice": false }
+    },
+    {
+      "internalName": "EC365_LocationId",
+      "displayName": "Location ID",
+      "type": "Number",
+      "required": false,
+      "indexed": true,
+      "validation": { "minValue": 1, "decimals": 0 }
+    },
+    {
+      "internalName": "EC365_IsActive",
+      "displayName": "Is Active",
+      "type": "Boolean",
+      "required": true,
+      "indexed": true,
+      "defaultValue": true
+    },
+    {
+      "internalName": "EC365_MatchCount",
+      "displayName": "Match Count",
+      "type": "Number",
+      "required": false,
+      "indexed": false,
+      "defaultValue": 0,
+      "validation": { "minValue": 0, "decimals": 0 }
+    }
+  ],
+  "indexedColumns": [
+    { "columns": ["EC365_CategoryId"], "primary": true },
+    { "columns": ["EC365_UserId"], "primary": true },
+    { "columns": ["EC365_IsActive"], "primary": true },
+    { "columns": ["EC365_MaxPrice"], "primary": true },
+    { "columns": ["EC365_IsActive", "EC365_CategoryId"], "primary": false }
+  ],
+  "contentTypes": [
+    {
+      "name": "EC365 Wanted Ad",
+      "id": "0x0100EC3650010",
+      "description": "Enterprise Classifieds 365 wanted ad item.",
+      "group": "Enterprise Classifieds 365",
+      "fields": [
+        "Title",
+        "EC365_Description",
+        "EC365_CategoryId",
+        "EC365_UserId",
+        "EC365_UserDisplayName",
+        "EC365_MaxPrice",
+        "EC365_Currency",
+        "EC365_LocationId",
+        "EC365_IsActive",
+        "EC365_MatchCount"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "title": "All Wanted Ads",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "default": true,
+      "fields": ["LinkTitle", "EC365_UserDisplayName", "EC365_CategoryId", "EC365_MaxPrice", "EC365_IsActive", "EC365_MatchCount", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "Active Wanted Ads",
+      "viewType": "HTML",
+      "rowLimit": 200,
+      "query": "<Where><Eq><FieldRef Name='EC365_IsActive'/><Value Type='Boolean'>1</Value></Eq></Where>",
+      "fields": ["LinkTitle", "EC365_UserDisplayName", "EC365_CategoryId", "EC365_MaxPrice", "EC365_MatchCount", "Created"],
+      "sort": [{ "field": "Created", "ascending": false }]
+    },
+    {
+      "title": "By Category",
+      "viewType": "HTML",
+      "rowLimit": 500,
+      "fields": ["EC365_CategoryId", "LinkTitle", "EC365_MaxPrice", "EC365_IsActive", "Created"],
+      "sort": [
+        { "field": "EC365_CategoryId", "ascending": true },
+        { "field": "Created", "ascending": false }
+      ]
+    }
+  ]
+}

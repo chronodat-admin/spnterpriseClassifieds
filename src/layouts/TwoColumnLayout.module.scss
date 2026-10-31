@@ -1,0 +1,29 @@
+.twoColumn {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+.sidebar {
+  flex-shrink: 0;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .twoColumn {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+}
